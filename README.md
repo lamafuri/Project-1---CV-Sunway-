@@ -29,22 +29,117 @@ UDDHAR compares a before and an after satellite image of the same place, marks t
 
 ---
 
-<details>
-<summary><strong>Run it locally (for developers)</strong></summary>
+## Run It Locally (Setup Guide)
 
-Requires Python 3.12 and Node.js. From the repo root:
+UDDHAR has two parts that run side by side:
 
-```powershell
-# Backend (FastAPI, http://localhost:8000)
-.\scripts\start-backend.ps1
+| Part | Technology | Address |
+|---|---|---|
+| **Backend** (image analysis API) | Python, FastAPI | http://localhost:8000 |
+| **Frontend** (dashboard) | Next.js, TypeScript | http://localhost:3000 |
 
-# Frontend (Next.js, http://localhost:3000): in a second terminal
-.\scripts\start-frontend.ps1
+There are three ways to run it. Pick one:
+
+| Option | Use it when | Damage model |
+|---|---|---|
+| [**A. Backend + frontend directly**](#option-a-run-backend-and-frontend-directly) | Normal development and demos | Classical change detection (`stub`, fast) |
+| [**B. Docker Compose**](#option-b-run-everything-with-docker-compose) | You only have Docker and don't want to install Python or Node | Classical change detection (`stub`, fast) |
+| [**C. Pretrained deep learning model**](#option-c-run-with-the-pretrained-deep-learning-model) | You want real deep learning results in the dashboard | Official xView2 model (`docker`, slow) |
+
+### Prerequisites
+
+| Tool | Version | Needed for | Check with |
+|---|---|---|---|
+| Git | any recent | All options | `git --version` |
+| Python | **3.12** (the pinned packages are built for it) | A, C | `python3 --version` |
+| Node.js + npm | **20 or newer** | A, C | `node --version` |
+| Docker Engine or Docker Desktop | 24 or newer, with Compose v2 | B, C | `docker compose version` |
+| Disk space | about 2 GB (A), 5 GB (B), 10 GB (C) | | |
+
+Optional: a **Google Gemini API key** for the AI-written situation brief. Without it the app still works and uses a built-in template brief.
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/lamafuri/Project-1---CV-Sunway-.git
+cd Project-1---CV-Sunway-
 ```
 
-Then open **http://localhost:3000**. See [`DEPLOY.md`](DEPLOY.md) for cloud deployment.
+Seven demo image pairs are included in `data/demo/`, so nothing else needs to be downloaded.
 
-</details>
+### 2. Create the environment file
+
+The backend reads its settings from a `.env` file in the **repository root**. Copy the template:
+
+```bash
+cp .env.example .env            # Linux / macOS
+copy .env.example .env          # Windows (Command Prompt or PowerShell)
+```
+
+Every setting has a working default, so you can leave `.env` unchanged for a first run. The variables are:
+
+| Variable | Default | What it does |
+|---|---|---|
+| `INFERENCE_MODE` | `stub` | Damage model: `stub` (classical change detection), `docker` (pretrained xView2 model, see Option C) or `pytorch` (fine-tuned checkpoint, none ships with the repo) |
+| `GEMINI_API_KEYS` | empty | One or more Gemini API keys, comma-separated, for the situation brief. Empty = template brief |
+| `GEMINI_MODEL` | `gemini-3.6-flash` | Gemini model tried first |
+| `GEMINI_FALLBACK_MODELS` | `gemini-2.5-flash,gemini-2.0-flash` | Models tried in order when the first one is out of quota |
+| `DEMO_DATA_DIR` | `data/demo` | Folder with the demo pairs. Relative paths are resolved from the repository root |
+| `XVIEW2_DOCKER_IMAGE` | `darknem-xview2-inference` | Image name used when `INFERENCE_MODE=docker` |
+| `PYTORCH_CHECKPOINT_PATH` | `ml/checkpoints/damage_best.ckpt` | Checkpoint used when `INFERENCE_MODE=pytorch` |
+| `CORS_ORIGINS` | localhost:3000 and the Vercel site | JSON list of frontend addresses allowed to call the API, e.g. `["http://localhost:3000"]` |
+| `CORS_ORIGIN_REGEX` | empty | Optional regex of extra allowed origins. Leave empty unless you need it |
+| `ACCESS_TOKEN` | empty | If set, the analysis endpoints require an `X-API-Key` header with this value |
+| `RATE_LIMIT_REQUESTS` / `RATE_LIMIT_WINDOW_SECONDS` | `60` / `60` | Requests allowed per IP per window. `0` turns rate limiting off |
+| `DISABLE_OPENAPI_DOCS` | `false` | `true` hides the API docs at `/docs` |
+| `KEEP_ALIVE` | `true` | Only matters on Render hosting, where the backend pings itself to stay awake. Does nothing locally |
+
+The frontend has one variable of its own, `NEXT_PUBLIC_API_URL`, the backend address. It defaults to `http://localhost:8000`, so you only need it if the backend runs somewhere else. Put it in `frontend/.env.local`:
+
+```bash
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+> Never commit `.env` or `.env.local`. Both are already git-ignored.
+
+### Option A: Run backend and frontend directly
+
+Use two terminals, both starting from the repository root.
+
+**Terminal 1: backend**
+
+Linux / macOS:
+
+```bash
+python3.12 -m venv backend/.venv
+source backend/.venv/bin/activate
+pip install -r backend/requirements-dev.txt
+uvicorn app.main:app --app-dir backend --reload --port 8000
+```
+
+Windows (PowerShell):
+
+```powershell
+py -3.12 -m venv backend\.venv
+backend\.venv\Scripts\Activate.ps1
+pip install -r backend\requirements-dev.txt
+uvicorn app.main:app --app-dir backend --reload --port 8000
+```
+
+On Windows you can also run `.\scripts\start-backend.ps1`, which creates the virtual environment on first use and then starts the server.
+
+Wait for `Uvicorn running on http://127.0.0.1:8000`. Next time you only need the activate line and the `uvicorn` line.
+
+**Terminal 2: frontend**
+
+```bash
+cd frontend
+npm ci          # first time only
+npm run dev
+```
+
+Open **http://localhost:3000**, pick a demo pair, click **Load Demo Pair**, then **Analyze Damage**.
+
 
 ---
 
