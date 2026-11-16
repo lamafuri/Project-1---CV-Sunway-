@@ -192,6 +192,45 @@ To regenerate them after building the image, with the backend's Python environme
 python scripts/precompute_pretrained.py
 ```
 
+How the pretrained model compares with the classical `stub` method on the four xBD pairs that have expert labels (pixel F1, 1.0 is perfect):
+
+| Demo pair | Finding buildings: pretrained | Finding buildings: stub | Finding damage: pretrained | Finding damage: stub |
+|---|---|---|---|---|
+| mexico-earthquake_00000076 | 0.743 | 0.157 | 0.089 | 0.036 |
+| mexico-earthquake_00000006 | 0.778 | 0.088 | 0.030 | 0.007 |
+| midwest-flooding_00000008 | 0.781 | 0.048 | 0.580 | 0.048 |
+| midwest-flooding_00000011 | 0.865 | 0.218 | 0.104 | 0.008 |
+
+The pretrained model finds buildings well. Grading their damage is harder: on these pairs it never predicts "major damage" and it often marks intact red roofs as "destroyed". It is still far ahead of the stub on both measures.
+
+### Check that it works
+
+```bash
+curl http://localhost:8000/health
+```
+
+This should return `"status":"ok"`, the active `inference_mode` and `"demo_pairs":7`. Interactive API docs are at http://localhost:8000/docs.
+
+### Run the tests
+
+```bash
+cd backend && python -m pytest tests/ -v                 # backend
+python -m pytest ml/pytorch-inference/tests/ -v           # ML helpers, from the repo root
+cd frontend && npm run typecheck && npm run lint && npm run build
+```
+
+### Troubleshooting
+
+| Problem | Fix |
+|---|---|
+| Dashboard says the backend is offline | Check the backend terminal is running and `curl http://localhost:8000/health` works. If the backend is on another address, set `NEXT_PUBLIC_API_URL` in `frontend/.env.local` and restart `npm run dev` |
+| `pip install` fails building numpy or scipy | Use Python **3.12**. Newer Python versions may not have prebuilt wheels for the pinned versions |
+| `Address already in use` on port 8000 or 3000 | Stop the other program, or start on another port (`--port 8001` for uvicorn, `npm run dev -- -p 3001`). If you move the backend, update `NEXT_PUBLIC_API_URL` |
+| `permission denied ... docker.sock` | `sudo usermod -aG docker $USER`, then log out and back in |
+| `INFERENCE_MODE=docker cannot run from inside a container` | You started the backend with `docker compose up`. Run it directly as in Option A |
+| Analysis fails with `Docker baseline failed` | The model image is missing. Build it with `docker compose --profile build-ml build ml` |
+| Situation brief (from `/brief`) looks generic | No Gemini key is set, or its daily quota is used up. Add a key to `GEMINI_API_KEYS` |
+| Zone map shows a plain image instead of a real map | Normal for uploads and the three river-valley pairs. Only pairs with xBD location labels can be placed on real map tiles |
 
 ---
 
