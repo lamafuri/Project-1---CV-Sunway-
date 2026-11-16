@@ -13,7 +13,10 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "backend"))
 
 from app.config import settings  # noqa: E402
-from app.services.inference import resolve_demo_target, run_docker_inference  # noqa: E402
+from app.services.inference import (  # noqa: E402
+    _run_docker_baseline as run_docker_inference,
+    resolve_demo_target,
+)
 
 from compare_models import mask_iou  # noqa: E402
 
