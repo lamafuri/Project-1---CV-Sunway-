@@ -85,7 +85,7 @@ Every setting has a working default, so you can leave `.env` unchanged for a fir
 | `GEMINI_MODEL` | `gemini-3.6-flash` | Gemini model tried first |
 | `GEMINI_FALLBACK_MODELS` | `gemini-2.5-flash,gemini-2.0-flash` | Models tried in order when the first one is out of quota |
 | `DEMO_DATA_DIR` | `data/demo` | Folder with the demo pairs. Relative paths are resolved from the repository root |
-| `XVIEW2_DOCKER_IMAGE` | `darknem-xview2-inference` | Image name used when `INFERENCE_MODE=docker` |
+| `XVIEW2_DOCKER_IMAGE` | `yukti-xview2-inference` | Image name used when `INFERENCE_MODE=docker` |
 | `PYTORCH_CHECKPOINT_PATH` | `ml/checkpoints/damage_best.ckpt` | Checkpoint used when `INFERENCE_MODE=pytorch` |
 | `CORS_ORIGINS` | localhost:3000 and the Vercel site | JSON list of frontend addresses allowed to call the API, e.g. `["http://localhost:3000"]` |
 | `CORS_ORIGIN_REGEX` | empty | Optional regex of extra allowed origins. Leave empty unless you need it |

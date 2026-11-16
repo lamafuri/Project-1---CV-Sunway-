@@ -106,7 +106,7 @@ async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
 
 app = FastAPI(
     title="Disaster Damage Triage API",
-    description="Satellite building damage assessment — Team DarkNem",
+    description="Satellite building damage assessment, Team Yukti",
     version="0.1.0",
     docs_url=None if settings.disable_openapi_docs else "/docs",
     redoc_url=None if settings.disable_openapi_docs else "/redoc",

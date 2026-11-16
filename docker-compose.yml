@@ -22,7 +22,7 @@ services:
       - GEMINI_API_KEYS=${GEMINI_API_KEYS:-}
       - GEMINI_MODEL=${GEMINI_MODEL:-gemini-3.6-flash}
       - GEMINI_FALLBACK_MODELS=${GEMINI_FALLBACK_MODELS:-gemini-2.5-flash,gemini-2.0-flash}
-      - XVIEW2_DOCKER_IMAGE=${XVIEW2_DOCKER_IMAGE:-darknem-xview2-inference}
+      - XVIEW2_DOCKER_IMAGE=${XVIEW2_DOCKER_IMAGE:-yukti-xview2-inference}
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
       interval: 30s
@@ -51,6 +51,6 @@ services:
     build:
       context: ./ml/inference
       dockerfile: Dockerfile
-    image: darknem-xview2-inference
+    image: yukti-xview2-inference
     profiles:
       - build-ml

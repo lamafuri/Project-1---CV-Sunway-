@@ -1,5 +1,5 @@
 # CPU PyTorch inference for fine-tuned xView2 checkpoints
-# Build after training: docker build -t darknem-xview2-pytorch -f Dockerfile ..
+# Build after training: docker build -t yukti-xview2-pytorch -f Dockerfile ..
 FROM python:3.11-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \

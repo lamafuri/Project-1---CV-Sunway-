@@ -47,7 +47,7 @@ class Settings(BaseSettings):
     demo_data_dir: Path = _REPO_ROOT / "data" / "demo"
     test_data_dir: Path = _REPO_ROOT / "data" / "test"
     inference_mode: str = "stub"  # stub | docker | pytorch
-    xview2_docker_image: str = "darknem-xview2-inference"
+    xview2_docker_image: str = "yukti-xview2-inference"
     pytorch_checkpoint_path: Path = _REPO_ROOT / "ml" / "checkpoints" / "damage_best.ckpt"
     pytorch_inference_dir: Path = _REPO_ROOT / "ml" / "pytorch-inference"
     pytorch_repo_dir: Path = _REPO_ROOT / "ml" / "pytorch-xview2"

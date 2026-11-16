@@ -1,6 +1,6 @@
 {
   "model": "xView2 baseline (TensorFlow 1.15, pretrained weights)",
-  "image": "darknem-xview2-inference",
+  "image": "yukti-xview2-inference",
   "pairs": {
     "river-valley-flood_01": {
       "seconds": 28.8,

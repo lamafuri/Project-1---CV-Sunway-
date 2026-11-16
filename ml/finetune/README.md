@@ -69,12 +69,12 @@ Hyperparameters: `ml/finetune/config_subset.yaml` via `load_config.py` (`pip ins
 
 ```bash
 cd ml/pytorch-xview2
-docker build -f Dockerfile.rocm -t darknem-xview2-train .
+docker build -f Dockerfile.rocm -t yukti-xview2-train .
 docker run --rm --device=/dev/kfd --device=/dev/dri \
   -v /data/train_subset:/data/train_subset \
   -v /data/test:/data/test \
   -v /results:/results \
-  darknem-xview2-train \
+  yukti-xview2-train \
   bash -c "cd /workspace/xview2 && bash ../finetune/run_amd_pipeline.sh"
 ```
 
