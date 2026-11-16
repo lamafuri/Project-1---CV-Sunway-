@@ -140,6 +140,58 @@ npm run dev
 
 Open **http://localhost:3000**, pick a demo pair, click **Load Demo Pair**, then **Analyze Damage**.
 
+### Option B: Run everything with Docker Compose
+
+From the repository root:
+
+```bash
+docker compose up --build
+```
+
+The first build takes a few minutes. When both containers are running, open **http://localhost:3000**. Press `Ctrl+C` to stop, and run `docker compose down` to remove the containers.
+
+Compose reads `INFERENCE_MODE` and the Gemini settings from the same `.env` file. Keep `INFERENCE_MODE=stub` for this option: the pretrained model cannot run from inside the backend container (see Option C), so `docker` mode fails here.
+
+### Option C: Run with the pretrained deep learning model
+
+This mode sends each image pair to the official **xView2 baseline**, a deep learning model already trained on the xBD dataset. It finds buildings and grades their damage, so the dashboard can show undamaged buildings and ignores changes on trees, water and roads. No training is needed.
+
+1. **Build the model image** (once per machine, 15 to 30 minutes, a few GB of downloads):
+
+   ```bash
+   docker compose --profile build-ml build ml
+   ```
+
+   On Linux, if you get `permission denied` from Docker, add yourself to the `docker` group, then log out and back in:
+
+   ```bash
+   sudo usermod -aG docker $USER
+   ```
+
+2. **Switch the backend to this model.** In `.env` set:
+
+   ```bash
+   INFERENCE_MODE=docker
+   ```
+
+3. **Start the backend and frontend as in Option A.** The backend must run directly on your machine (not through `docker compose up`), because it starts the model container itself.
+
+Each analysis takes about 30 to 60 seconds (measured at 29 to 40 seconds per 1024 × 1024 pair on a 16-core desktop CPU), because the model's TensorFlow 1.15 runs on the CPU only. Set `INFERENCE_MODE=stub` again to go back to the fast mode.
+
+#### Precomputed results
+
+The pretrained model's output for all seven demo pairs is saved in [`data/demo/pretrained_results/`](data/demo/pretrained_results/), so you can look at it without building anything:
+
+- `<pair>_mask.png`: the raw damage mask (pixel values 0 to 4)
+- `<pair>_overlay.jpg`: the mask drawn in colour over the post-disaster image
+- `summary.json`: zone scores for every pair, and accuracy against the xBD ground truth for the four labelled pairs, compared with the classical model
+
+To regenerate them after building the image, with the backend's Python environment active:
+
+```bash
+python scripts/precompute_pretrained.py
+```
+
 
 ---
 
