@@ -257,12 +257,12 @@ It can:
 
 - Compare pre-disaster and post-disaster imagery
 - Detect visible damage patterns
-- Classify damage severity across affected zones
+- Grade damage as minor, major or destroyed
 - Display a visual damage overlay
-- Generate damage summaries
-- Rank priority response zones
-- Produce an AI-assisted situation brief
-- Export a field-ready disaster damage report
+- Split the image into a 4 × 4 grid and rank the zones by priority
+- Place the zones on a real map when the image has location data
+- Produce an AI-written situation brief (API)
+- Export a PDF field report (API)
 
 ---
 
@@ -293,21 +293,21 @@ Upload or load paired imagery from before and after a disaster event.
 
 Damage results are displayed directly over the affected area, making it easier to understand the scale and location of destruction.
 
-### Damage Summary
-
-The dashboard summarizes affected structures and damage severity in a clear visual format.
-
 ### Priority Zone Ranking
 
-UDDHAR ranks zones based on severity, helping emergency teams decide where to respond first.
+The image is split into a 4 × 4 grid. Each zone gets a priority score from 0 to 100 based on how many damaged regions it holds and how severe they are (minor 2, major 3.5, destroyed 5). The top five zones are labelled on the overlay.
 
-### Situation Brief
+### Zone Map
 
-The system generates a concise emergency-response brief that explains the damage pattern and recommended next steps.
+For the xBD demo pairs, the backend fits a pixel to latitude/longitude transform from the xBD building labels, so the ranked zones appear on real satellite map tiles (Leaflet). Other images show the zones over the image itself.
 
-### Field Report Export
+### Situation Brief (API)
 
-Users can export a structured disaster damage report for response teams, coordinators, and stakeholders.
+`/brief` sends the zone numbers (never the images) to Google Gemini, which writes a short plain-language brief. Without a key, or if every model is out of quota, a built-in template brief is used. The dashboard runs this step but does not display the text.
+
+### Field Report Export (API)
+
+`/report/pdf` renders the analysis and brief into a PDF report with ReportLab. It is available through the API; the dashboard has no download button for it.
 
 ---
 
@@ -315,7 +315,7 @@ Users can export a structured disaster damage report for response teams, coordin
 
 | Severity | Description |
 |---|---|
-| No Damage | Area or structure appears largely unaffected |
+| No Damage | Area or structure appears largely unaffected (only the pretrained model can output this; the `stub` method detects change, so it cannot) |
 | Minor Damage | Light visible damage or limited disruption |
 | Major Damage | Significant visible damage requiring urgent inspection |
 | Destroyed | Severe destruction or likely structural collapse |
@@ -333,13 +333,11 @@ Run Damage Analysis
               ↓
 Display Damage Overlay
               ↓
-Generate Damage Summary
+Rank Priority Zones (4 × 4 grid)
               ↓
-Rank Priority Zones
+Place Zones on the Map
               ↓
-Create Situation Brief
-              ↓
-Export Field Damage Report
+Create Situation Brief (Gemini or template)
 ```
 
 ---
@@ -348,19 +346,25 @@ Export Field Damage Report
 
 ### Frontend
 
-- Next.js
+- Next.js 15 and React 19
 - TypeScript
 - Tailwind CSS
-- Interactive disaster dashboard
-- Visual damage summary and zone ranking
+- Leaflet for the zone map
+- HTML canvas for the damage overlay and zone labels
 
 ### Backend
 
-- Python
+- Python 3.12
 - FastAPI
-- Image processing pipeline
-- REST API
-- Report generation
+- NumPy, SciPy and Pillow for the image processing (alignment, thresholding, morphology, connected components)
+- Google Gemini for the situation brief text
+- ReportLab for the PDF report
+
+### Models
+
+- `stub`: classical change detection, no training
+- `docker`: the official xView2 baseline (TensorFlow 1.15, pretrained on xBD), run in Docker
+- `pytorch`: Siamese U-Net with a ResNet-50 encoder, training scripts ready, not trained
 
 ---
 
@@ -385,7 +389,7 @@ ground-truth target masks.
 
 ### Curate demo pairs from the full dataset
 
-After downloading and extracting the test archive to `data/test/`:
+After downloading and extracting the test archive to `data/test/`, on Windows (PowerShell):
 
 ```powershell
 .\scripts\curate_demo_subset.ps1
@@ -418,14 +422,15 @@ A consequence worth knowing before you read the dashboard: the heuristic detects
 0 in `stub` mode by construction. Distinguishing an intact building from bare
 ground needs the trained model.
 
-`docker` mode requires building the baseline image first:
+`docker` mode requires building the baseline image first (see [Option C](#option-c-run-with-the-pretrained-deep-learning-model)):
 
-```powershell
+```bash
 docker compose --profile build-ml build ml
 ```
 
-The first `docker`-mode analysis is slow (~2 min: TF 1.15 cold start plus two
-models), so `stub` remains the default for a responsive live demo.
+Each `docker`-mode analysis takes 30 to 60 seconds on a desktop CPU (TF 1.15
+cold start plus two models), so `stub` remains the default for a responsive live demo.
+Results for all demo pairs are precomputed in `data/demo/pretrained_results/`.
 
 ### Fine-tuning
 
@@ -439,9 +444,7 @@ bash ml/finetune/run_amd_pipeline.sh   # AMD Instinct / ROCm over SSH
 bash ml/finetune/run_kaggle_pipeline.sh  # CUDA fallback
 ```
 
-The notebook script also captures the AMD hardware evidence described in
-[`docs/AMD_COMPUTE.md`](docs/AMD_COMPUTE.md). Full runbook in
-[`ml/finetune/README.md`](ml/finetune/README.md).
+Full runbook in [`ml/finetune/README.md`](ml/finetune/README.md).
 
 **Status: not executed.** We could not get working hackathon GPU access, so no
 checkpoint ships and `pytorch` mode is untested end-to-end.
@@ -450,15 +453,17 @@ checkpoint ships and `pytorch` mode is untested end-to-end.
 
 ## Development
 
-```powershell
-# Backend tests
-cd backend; .\.venv\Scripts\python.exe -m pytest tests/ -v
+With the backend virtual environment active (see [Option A](#option-a-run-backend-and-frontend-directly)):
 
-# ML inference tests (CPU only: no GPU or checkpoint needed)
+```bash
+# Backend tests (from backend/)
+cd backend && python -m pytest tests/ -v
+
+# ML inference tests (CPU only, no GPU or checkpoint needed; from the repo root)
 python -m pytest ml/pytorch-inference/tests/ -v
 
-# Frontend
-cd frontend; npm run typecheck; npm run lint; npm run build
+# Frontend (from frontend/)
+cd frontend && npm run typecheck && npm run lint && npm run build
 ```
 
 CI runs all of the above on every push and pull request
