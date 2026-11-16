@@ -1,6 +1,16 @@
+# UDDHAR
+
+**See damage. Prioritize relief. Save lives.**
+
+UDDHAR compares a before and an after satellite image of the same place, marks the damage, and ranks the area into priority zones so relief teams know where to go first. Project 1 (Computer Vision), Team Yukti.
+
 ## Dashboard
 
-<p align="center"><em>Before/after imagery with an AI damage overlay, ranked priority zones, a damage summary, and an AI-generated situation brief: all in one triage view.</em></p>
+<p align="center">
+  <img src="./docs/dashboard.jpg" alt="UDDHAR dashboard: before image, damage overlay with ranked zones, and the zone map" width="900">
+</p>
+
+<p align="center"><em>Before image, damage overlay with the top five priority zones, and the zones placed on a real map.</em></p>
 
 ---
 
