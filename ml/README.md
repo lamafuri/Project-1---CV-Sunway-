@@ -8,18 +8,32 @@ The backend supports three inference modes:
 | `docker` | Pretrained xView2 TensorFlow baseline |
 | `pytorch` | Fine-tuned xView2 model; requires a checkpoint |
 
+Only the pretrained `docker` model has been run. No `pytorch` checkpoint exists
+yet, because the fine-tuning below has not been carried out.
+
 ## Run pretrained model
 
 Build the inference image, set `INFERENCE_MODE=docker` in `.env`, then start the
-backend:
+backend directly on the host:
+
+```bash
+docker compose --profile build-ml build ml
+uvicorn app.main:app --app-dir backend --reload --port 8000   # Linux / macOS
+```
 
 ```powershell
 docker compose --profile build-ml build ml
-.\scripts\start-backend.ps1
+.\scripts\start-backend.ps1                                   # Windows
 ```
 
 Docker inference runs locally; the backend cannot invoke the host Docker daemon
-from inside its own container.
+from inside its own container. Each analysis takes about 30 to 60 seconds on the
+CPU. The full walkthrough is Option C in the main [README](../README.md#option-c-run-with-the-pretrained-deep-learning-model).
+
+Results for all seven demo pairs are already saved in
+`data/demo/pretrained_results/` (masks, overlays and `summary.json` with accuracy
+against xBD ground truth). Regenerate them with
+`python scripts/precompute_pretrained.py`.
 
 ## Fine-tune with xBD
 

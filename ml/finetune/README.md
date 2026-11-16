@@ -1,8 +1,12 @@
-# Fine-tuning on AMD GPU — PyTorch path
+# Fine-tuning on AMD GPU (PyTorch path)
 
-**Status:** Data prep complete on laptop. Training awaits AMD GPU access.
+**Status:** Not trained. Data prep was done on a team member's laptop, but no
+training run has been carried out, so no checkpoint exists. The xBD data
+(`data/train/`, `data/train_subset/`) is git-ignored and is not in this repository;
+download it from [xview2.org](https://xview2.org) to repeat the steps below. The
+commands are PowerShell (Windows) unless marked `bash`.
 
-## What's ready (CPU, done)
+## Data prep steps (CPU)
 
 | Step | Command | Result |
 |------|---------|--------|
@@ -12,7 +16,7 @@
 | Build hackathon subset | `python scripts\prepare_train_subset.py ...` | ~1449 pairs in `data/train_subset/` |
 | Vendor PyTorch repo | `ml/pytorch-xview2/` | `michal2409/xView2` clone |
 
-Counts (verified):
+Counts from that laptop run:
 
 ```
 data/train/images   : 5598
@@ -55,8 +59,8 @@ bash ml/finetune/run_amd_pipeline.sh
 ```
 
 Stages (after patch + index.csv inside `run_amd_pipeline.sh`):
-1. **Localization** (`--type pre`) — epochs/batch from `config_subset.yaml`
-2. **Damage** (`--type post`, siamese) — loads loc checkpoint
+1. **Localization** (`--type pre`): epochs/batch from `config_subset.yaml`
+2. **Damage** (`--type post`, siamese): loads loc checkpoint
 3. **Eval** on `data/test/`
 
 Hyperparameters: `ml/finetune/config_subset.yaml` via `load_config.py` (`pip install pyyaml`)
@@ -74,11 +78,11 @@ docker run --rm --device=/dev/kfd --device=/dev/dri \
   bash -c "cd /workspace/xview2 && bash ../finetune/run_amd_pipeline.sh"
 ```
 
-**Time box:** 4–6 hours. Stop and ship TF baseline if not converging.
+**Time box:** 4 to 6 hours. Stop and ship TF baseline if not converging.
 
 ## Kaggle GPU (no AMD access)
 
-See [docs/KAGGLE_FINETUNE.md](../../docs/KAGGLE_FINETUNE.md) and `notebooks/kaggle_finetune.ipynb` for CUDA fine-tuning on Kaggle using pre-built `train_subset`.
+Use `run_kaggle_pipeline.sh` (with `config_subset_kaggle.yaml`) for CUDA fine-tuning on Kaggle using pre-built `train_subset`.
 
 ```powershell
 .\scripts\zip_train_subset.ps1
@@ -110,4 +114,4 @@ Restart backend. Compare IoU:
 
 ## Do not attempt
 
-- TF 1.15 / Keras 2.2.5 training on ROCm — no practical path in hackathon window
+- TF 1.15 / Keras 2.2.5 training on ROCm: no practical path in hackathon window

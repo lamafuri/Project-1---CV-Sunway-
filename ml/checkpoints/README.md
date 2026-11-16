@@ -13,14 +13,17 @@ Get-FileHash ml\checkpoints\damage_best.ckpt -Algorithm SHA256
 Record the hash next to the file name in your run notes. Never accept
 user-uploaded checkpoints through the public API.
 
-## Localization (from Kaggle tier3 run, ~epoch 7)
+**Current state: empty.** No checkpoint has been trained yet, so `pytorch` mode
+cannot run. The sections below describe where files go once training is done.
+
+## Localization (Kaggle tier3 run)
 
 Holdout validation uses a disjoint ~10% pair split (`ml/finetune/data_layout.py`).
 Reported F1 is only meaningful after that layout is in place (not when train/test
 pointed at the same images).
 
-- `loc_best.ckpt` — use this as `--ckpt_pre` / upload for damage stage
-- `loc_last.ckpt`, `loc_step.ckpt` — backups
+- `loc_best.ckpt`: use this as `--ckpt_pre` / upload for damage stage
+- `loc_last.ckpt`, `loc_step.ckpt`: backups
 
 ## Damage (for app inference)
 
