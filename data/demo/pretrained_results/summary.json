@@ -1,0 +1,777 @@
+{
+  "model": "xView2 baseline (TensorFlow 1.15, pretrained weights)",
+  "image": "darknem-xview2-inference",
+  "pairs": {
+    "river-valley-flood_01": {
+      "seconds": 28.8,
+      "summary": {
+        "total_building_pixels": 22138,
+        "total_buildings": 29,
+        "destroyed_pct": 55.17,
+        "major_pct": 0.0,
+        "minor_pct": 10.34
+      },
+      "top_zones": [
+        {
+          "rank": 1,
+          "bbox": [
+            256,
+            512,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 5
+          }
+        },
+        {
+          "rank": 2,
+          "bbox": [
+            512,
+            512,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 3
+          }
+        },
+        {
+          "rank": 3,
+          "bbox": [
+            768,
+            512,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 1
+          }
+        },
+        {
+          "rank": 4,
+          "bbox": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "priority_score": 60.0,
+          "building_counts": {
+            "none": 3,
+            "minor": 1,
+            "major": 0,
+            "destroyed": 5
+          }
+        },
+        {
+          "rank": 5,
+          "bbox": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "priority_score": 48.0,
+          "building_counts": {
+            "none": 4,
+            "minor": 2,
+            "major": 0,
+            "destroyed": 4
+          }
+        }
+      ],
+      "zone_count": 7
+    },
+    "river-valley-flood_02": {
+      "seconds": 32.8,
+      "summary": {
+        "total_building_pixels": 17993,
+        "total_buildings": 36,
+        "destroyed_pct": 83.33,
+        "major_pct": 0.0,
+        "minor_pct": 2.78
+      },
+      "top_zones": [
+        {
+          "rank": 1,
+          "bbox": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 1
+          }
+        },
+        {
+          "rank": 2,
+          "bbox": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 6
+          }
+        },
+        {
+          "rank": 3,
+          "bbox": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 4
+          }
+        },
+        {
+          "rank": 4,
+          "bbox": [
+            512,
+            512,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 2
+          }
+        },
+        {
+          "rank": 5,
+          "bbox": [
+            768,
+            768,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 1
+          }
+        }
+      ],
+      "zone_count": 9
+    },
+    "river-valley-flood_03": {
+      "seconds": 32.3,
+      "summary": {
+        "total_building_pixels": 23958,
+        "total_buildings": 61,
+        "destroyed_pct": 68.85,
+        "major_pct": 0.0,
+        "minor_pct": 9.84
+      },
+      "top_zones": [
+        {
+          "rank": 1,
+          "bbox": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 1
+          }
+        },
+        {
+          "rank": 2,
+          "bbox": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 2
+          }
+        },
+        {
+          "rank": 3,
+          "bbox": [
+            512,
+            512,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 1
+          }
+        },
+        {
+          "rank": 4,
+          "bbox": [
+            256,
+            768,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 3
+          }
+        },
+        {
+          "rank": 5,
+          "bbox": [
+            256,
+            512,
+            256,
+            256
+          ],
+          "priority_score": 92.31,
+          "building_counts": {
+            "none": 1,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 12
+          }
+        }
+      ],
+      "zone_count": 11
+    },
+    "mexico-earthquake_00000076": {
+      "seconds": 36.4,
+      "summary": {
+        "total_building_pixels": 211392,
+        "total_buildings": 305,
+        "destroyed_pct": 33.77,
+        "major_pct": 0.0,
+        "minor_pct": 8.2
+      },
+      "top_zones": [
+        {
+          "rank": 1,
+          "bbox": [
+            0,
+            768,
+            256,
+            256
+          ],
+          "priority_score": 62.5,
+          "building_counts": {
+            "none": 12,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 20
+          }
+        },
+        {
+          "rank": 2,
+          "bbox": [
+            256,
+            768,
+            256,
+            256
+          ],
+          "priority_score": 49.73,
+          "building_counts": {
+            "none": 18,
+            "minor": 1,
+            "major": 0,
+            "destroyed": 18
+          }
+        },
+        {
+          "rank": 3,
+          "bbox": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "priority_score": 48.97,
+          "building_counts": {
+            "none": 13,
+            "minor": 3,
+            "major": 0,
+            "destroyed": 13
+          }
+        },
+        {
+          "rank": 4,
+          "bbox": [
+            512,
+            768,
+            256,
+            256
+          ],
+          "priority_score": 47.74,
+          "building_counts": {
+            "none": 15,
+            "minor": 2,
+            "major": 0,
+            "destroyed": 14
+          }
+        },
+        {
+          "rank": 5,
+          "bbox": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "priority_score": 43.33,
+          "building_counts": {
+            "none": 14,
+            "minor": 5,
+            "major": 0,
+            "destroyed": 11
+          }
+        }
+      ],
+      "zone_count": 16,
+      "vs_ground_truth": {
+        "pretrained": {
+          "damage": {
+            "precision": 0.065,
+            "recall": 0.143,
+            "f1": 0.089,
+            "iou": 0.047
+          },
+          "building": {
+            "precision": 0.938,
+            "recall": 0.615,
+            "f1": 0.743,
+            "iou": 0.591
+          }
+        },
+        "stub": {
+          "damage": {
+            "precision": 0.024,
+            "recall": 0.065,
+            "f1": 0.036,
+            "iou": 0.018
+          },
+          "building": {
+            "precision": 0.618,
+            "recall": 0.09,
+            "f1": 0.157,
+            "iou": 0.085
+          }
+        }
+      }
+    },
+    "mexico-earthquake_00000006": {
+      "seconds": 37.9,
+      "summary": {
+        "total_building_pixels": 265244,
+        "total_buildings": 522,
+        "destroyed_pct": 40.23,
+        "major_pct": 0.0,
+        "minor_pct": 3.26
+      },
+      "top_zones": [
+        {
+          "rank": 1,
+          "bbox": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "priority_score": 67.19,
+          "building_counts": {
+            "none": 21,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 43
+          }
+        },
+        {
+          "rank": 2,
+          "bbox": [
+            0,
+            768,
+            256,
+            256
+          ],
+          "priority_score": 54.92,
+          "building_counts": {
+            "none": 26,
+            "minor": 1,
+            "major": 0,
+            "destroyed": 32
+          }
+        },
+        {
+          "rank": 3,
+          "bbox": [
+            0,
+            512,
+            256,
+            256
+          ],
+          "priority_score": 50.16,
+          "building_counts": {
+            "none": 29,
+            "minor": 4,
+            "major": 0,
+            "destroyed": 30
+          }
+        },
+        {
+          "rank": 4,
+          "bbox": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "priority_score": 48.0,
+          "building_counts": {
+            "none": 30,
+            "minor": 2,
+            "major": 0,
+            "destroyed": 28
+          }
+        },
+        {
+          "rank": 5,
+          "bbox": [
+            512,
+            768,
+            256,
+            256
+          ],
+          "priority_score": 38.87,
+          "building_counts": {
+            "none": 30,
+            "minor": 4,
+            "major": 0,
+            "destroyed": 19
+          }
+        }
+      ],
+      "zone_count": 16,
+      "vs_ground_truth": {
+        "pretrained": {
+          "damage": {
+            "precision": 0.016,
+            "recall": 0.194,
+            "f1": 0.03,
+            "iou": 0.015
+          },
+          "building": {
+            "precision": 0.901,
+            "recall": 0.684,
+            "f1": 0.778,
+            "iou": 0.636
+          }
+        },
+        "stub": {
+          "damage": {
+            "precision": 0.004,
+            "recall": 0.033,
+            "f1": 0.007,
+            "iou": 0.004
+          },
+          "building": {
+            "precision": 0.403,
+            "recall": 0.05,
+            "f1": 0.088,
+            "iou": 0.046
+          }
+        }
+      }
+    },
+    "midwest-flooding_00000008": {
+      "seconds": 32.4,
+      "summary": {
+        "total_building_pixels": 3355,
+        "total_buildings": 13,
+        "destroyed_pct": 38.46,
+        "major_pct": 0.0,
+        "minor_pct": 46.15
+      },
+      "top_zones": [
+        {
+          "rank": 1,
+          "bbox": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 4
+          }
+        },
+        {
+          "rank": 2,
+          "bbox": [
+            768,
+            768,
+            256,
+            256
+          ],
+          "priority_score": 100.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 0,
+            "major": 0,
+            "destroyed": 1
+          }
+        },
+        {
+          "rank": 3,
+          "bbox": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "priority_score": 40.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 1,
+            "major": 0,
+            "destroyed": 0
+          }
+        },
+        {
+          "rank": 4,
+          "bbox": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "priority_score": 40.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 1,
+            "major": 0,
+            "destroyed": 0
+          }
+        },
+        {
+          "rank": 5,
+          "bbox": [
+            0,
+            512,
+            256,
+            256
+          ],
+          "priority_score": 40.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 3,
+            "major": 0,
+            "destroyed": 0
+          }
+        }
+      ],
+      "zone_count": 8,
+      "vs_ground_truth": {
+        "pretrained": {
+          "damage": {
+            "precision": 0.896,
+            "recall": 0.428,
+            "f1": 0.58,
+            "iou": 0.408
+          },
+          "building": {
+            "precision": 0.927,
+            "recall": 0.674,
+            "f1": 0.781,
+            "iou": 0.64
+          }
+        },
+        "stub": {
+          "damage": {
+            "precision": 0.026,
+            "recall": 0.313,
+            "f1": 0.048,
+            "iou": 0.024
+          },
+          "building": {
+            "precision": 0.026,
+            "recall": 0.311,
+            "f1": 0.048,
+            "iou": 0.024
+          }
+        }
+      }
+    },
+    "midwest-flooding_00000011": {
+      "seconds": 33.0,
+      "summary": {
+        "total_building_pixels": 75706,
+        "total_buildings": 62,
+        "destroyed_pct": 14.52,
+        "major_pct": 0.0,
+        "minor_pct": 38.71
+      },
+      "top_zones": [
+        {
+          "rank": 1,
+          "bbox": [
+            256,
+            768,
+            256,
+            256
+          ],
+          "priority_score": 70.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 2,
+            "major": 0,
+            "destroyed": 2
+          }
+        },
+        {
+          "rank": 2,
+          "bbox": [
+            0,
+            768,
+            256,
+            256
+          ],
+          "priority_score": 60.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 2,
+            "major": 0,
+            "destroyed": 1
+          }
+        },
+        {
+          "rank": 3,
+          "bbox": [
+            0,
+            512,
+            256,
+            256
+          ],
+          "priority_score": 40.0,
+          "building_counts": {
+            "none": 0,
+            "minor": 2,
+            "major": 0,
+            "destroyed": 0
+          }
+        },
+        {
+          "rank": 4,
+          "bbox": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "priority_score": 30.0,
+          "building_counts": {
+            "none": 3,
+            "minor": 2,
+            "major": 0,
+            "destroyed": 1
+          }
+        },
+        {
+          "rank": 5,
+          "bbox": [
+            768,
+            768,
+            256,
+            256
+          ],
+          "priority_score": 27.27,
+          "building_counts": {
+            "none": 5,
+            "minor": 5,
+            "major": 0,
+            "destroyed": 1
+          }
+        }
+      ],
+      "zone_count": 11,
+      "vs_ground_truth": {
+        "pretrained": {
+          "damage": {
+            "precision": 0.056,
+            "recall": 0.821,
+            "f1": 0.104,
+            "iou": 0.055
+          },
+          "building": {
+            "precision": 0.967,
+            "recall": 0.783,
+            "f1": 0.865,
+            "iou": 0.763
+          }
+        },
+        "stub": {
+          "damage": {
+            "precision": 0.004,
+            "recall": 0.112,
+            "f1": 0.008,
+            "iou": 0.004
+          },
+          "building": {
+            "precision": 0.271,
+            "recall": 0.182,
+            "f1": 0.218,
+            "iou": 0.122
+          }
+        }
+      }
+    }
+  }
+}
