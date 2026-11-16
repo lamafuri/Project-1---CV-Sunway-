@@ -20,10 +20,8 @@ if (-not (Test-Path $venvPython)) {
     & $venvPython -m pip install -r (Join-Path $backendDir "requirements.txt")
 }
 
-# Launch from the repo root, not backend/, so config.py finds the root .env
-# (it loads ".env" relative to the working directory). --app-dir puts the
-# `app` package on the path without changing the working directory. Running
-# from backend/ would silently fall back to defaults: INFERENCE_MODE=stub and
-# an empty FIREWORKS_API_KEY (stub brief instead of live inference/narration).
+# config.py anchors .env and relative paths to the repo root, so the working
+# directory does not matter for settings. --app-dir puts the `app` package on
+# the path without changing the working directory.
 Set-Location $repoRoot
 & $venvPython -m uvicorn app.main:app --app-dir backend --reload --host 0.0.0.0 --port 8000
