@@ -14,9 +14,9 @@ sys.path.insert(0, str(REPO / "backend"))
 
 from app.config import settings  # noqa: E402
 from app.services.inference import (  # noqa: E402
+    _run_docker_baseline as run_docker_inference,
+    _run_pytorch_inference as run_pytorch_inference,
     resolve_demo_target,
-    run_docker_inference,
-    run_pytorch_inference,
 )
 
 
