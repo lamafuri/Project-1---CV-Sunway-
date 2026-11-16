@@ -398,6 +398,14 @@ def _run_docker_baseline(pre_image_path: Path, post_image_path: Path, out_dir: P
     if pre_image_path.parent.resolve() != post_image_path.parent.resolve():
         raise RuntimeError("pre and post images must be in the same directory for docker inference")
 
+    # The image runs as its own non-root user (uid 999). On a Linux host the
+    # bind-mounted job dir keeps the backend user's ownership, so the model
+    # could not write its mask and run.sh failed with a bare "cp: cannot stat".
+    # Docker Desktop on Windows/macOS remaps ownership, which is why this only
+    # bites on Linux. The dir is a throwaway per-job folder.
+    if sys.platform != "win32":
+        out_dir.chmod(0o777)
+
     command = [
         _docker_executable(),
         "run",
