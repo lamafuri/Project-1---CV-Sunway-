@@ -3,12 +3,8 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import BriefPanel from "@/components/BriefPanel";
 import DamageCanvas from "@/components/DamageCanvas";
 import ZoneMap from "@/components/ZoneMap";
-import RiskPanel from "@/components/RiskPanel";
-import AllocationPanel from "@/components/AllocationPanel";
-import RosterEditor from "@/components/RosterEditor";
 import {
   analyzeDemoPair,
   analyzeUpload,
