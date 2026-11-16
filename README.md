@@ -14,17 +14,20 @@ UDDHAR compares a before and an after satellite image of the same place, marks t
 
 ---
 
-## Access UDDHAR
+## How to Use It
 
-**How to use it:**
-
-1. Open the live app in any modern browser.
-2. In the **Mission Control** panel, select a demo image pair: or upload your own before/after images.
+1. Start the app on your machine (see [Run It Locally](#run-it-locally-setup-guide) below) and open http://localhost:3000.
+2. In the **Mission Control** panel, pick a demo pair and click **Load Demo Pair**, or upload your own before and after images (PNG, JPG, WebP or TIFF, up to 15 MB each).
 3. Click **Analyze Damage**.
-4. Explore the results: the AI **damage overlay**, ranked **priority zones**, the **damage summary**, and an AI-generated **situation brief**.
-5. Click **Download field report (PDF)** to export a shareable report.
+4. Read the results:
+   - the **damage overlay** on the after image (yellow = minor, orange = major, red = destroyed),
+   - the **top five priority zones**, labelled on the overlay,
+   - the **zone map**, which places the zones on real satellite tiles when the pair has location data (the four xBD demo pairs),
+   - the **processing pipeline** panel, which shows when the analysis and the situation brief have finished and how long the analysis took.
 
-> **First load may take ~30 to 60 seconds** while the free-tier backend wakes from sleep. After that, it's responsive.
+> The backend can also write a Gemini situation brief (`/brief`) and a PDF field report (`/report/pdf`). Both are available through the API at http://localhost:8000/docs; the current dashboard does not display the brief text or offer a PDF button.
+
+---
 
 <details>
 <summary><strong>Run it locally (for developers)</strong></summary>
