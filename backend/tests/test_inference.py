@@ -312,3 +312,26 @@ def test_list_demo_pairs_ranks_damaged_first(tmp_path, monkeypatch):
     ids = [p["id"] for p in inference.list_demo_pairs()]
 
     assert ids == ["zzz-quake_00000002", "aaa-quake_00000001"]
+
+
+def test_docker_output_dir_is_writable_by_the_container_user(tmp_path, monkeypatch):
+    """The image runs as uid 999; on Linux it must be able to write the mask."""
+    images = tmp_path / "in"
+    images.mkdir()
+    pre = _write_png(images / "a_pre_disaster.png")
+    post = _write_png(images / "a_post_disaster.png")
+    out_dir = tmp_path / "job"
+    seen: dict[str, int] = {}
+
+    def _fake_run(cmd, **_kw):
+        seen["mode"] = out_dir.stat().st_mode & 0o777
+        _write_png(out_dir / f"{out_dir.name}_mask.png")
+        return subprocess.CompletedProcess(cmd, 0, "", "")
+
+    monkeypatch.setattr(inference.sys, "platform", "linux")
+    monkeypatch.setattr(inference.subprocess, "run", _fake_run)
+    real_exists = Path.exists
+    monkeypatch.setattr(inference.Path, "exists", lambda p: str(p) != "/.dockerenv" and real_exists(p))
+
+    inference._run_docker_baseline(pre, post, out_dir)
+    assert seen["mode"] == 0o777
